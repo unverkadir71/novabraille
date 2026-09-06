@@ -66,8 +66,6 @@ ENV PYTHONPATH=/app/backend \
     NOVA_ADMIN_EMAIL="" \
     NOVA_ADMIN_PASSWORD=""
 
-USER nova
-
 # Health check
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
     CMD curl -f http://localhost:9876/health || exit 1
