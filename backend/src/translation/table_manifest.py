@@ -51,7 +51,7 @@ def _list_tables() -> list[str]:
     return sorted(tables)
 
 
-─ Compatibility: louis.getTableInfo() shim ─────────────────
+# ── Compatibility: louis.getTableInfo() shim ─────────────────
 
 def _get_table_info(table_id: str, key: str) -> str:
     """Get table metadata, with fallback for liblouis < 3.34.
