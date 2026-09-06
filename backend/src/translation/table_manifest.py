@@ -51,6 +51,102 @@ def _list_tables() -> list[str]:
     return sorted(tables)
 
 
+─ Compatibility: louis.getTableInfo() shim ─────────────────
+
+def _get_table_info(table_id: str, key: str) -> str:
+    """Get table metadata, with fallback for liblouis < 3.34.
+    
+    Parses the table file's metadata comments when getTableInfo is unavailable.
+    """
+    if hasattr(louis, "getTableInfo"):
+        return louis.getTableInfo(table_id, key)  # type: ignore[attr-defined]
+    
+    return _parse_table_metadata(table_id, key)
+
+
+def _parse_table_metadata(table_id: str, key: str) -> str:
+    """Parse liblouis table file to extract metadata.
+    
+    Handles two comment formats:
+    - Old style: #<lang>#<dots>#<display>#<lang-code>#<region>
+    - New style: #+language:, #+type:, #+dots:, #+contraction:
+    """
+    table_path = _find_table_file(table_id)
+    if not table_path:
+        return ""
+    
+    try:
+        with open(table_path, "r", encoding="utf-8") as f:
+            first_line = f.readline().strip()
+            rest = f.read()
+    except (OSError, UnicodeDecodeError):
+        return ""
+    
+    # Try old-style first-line format: #<lang>#<dots>#<display>#<lang-code>#<region>
+    if first_line.startswith("#") and "#" in first_line[1:]:
+        parts = [p.strip() for p in first_line.lstrip("#").split("#")]
+        if parts and parts[0].isalpha() and len(parts[0]) <= 3:
+            mapping = _build_oldstyle_map(parts)
+            return mapping.get(key, "")
+    
+    # Try new-style metadata: #+language: tr, #+type: literary, etc.
+    return _parse_newstyle_meta(rest, key)
+
+
+def _build_oldstyle_map(parts: list[str]) -> dict[str, str]:
+    """Build metadata map from old-style table header parts.
+    
+    Old format: #<language_code>#<dots>#<display_name>#<language_name>#<region>
+    Example: #tr#1#Turkish Uncontracted#tr#Turkish
+    """
+    mapping: dict[str, str] = {}
+    if len(parts) >= 1:
+        mapping["language"] = parts[0].strip()
+    if len(parts) >= 2:
+        dots_val = parts[1].strip()
+        if dots_val.isdigit():
+            mapping["dots"] = dots_val
+    return mapping
+
+
+def _parse_newstyle_meta(text: str, key: str) -> str:
+    """Parse liblouis new-style metadata comments.
+    
+    #+language: tr
+    #+type: literary
+    #+dots: 6
+    #+contraction: full
+    #-index-name: Turkish Contracted
+    """
+    meta_map: dict[str, str] = {}
+    for line in text.split("\n"):
+        line = line.strip()
+        if line.startswith("#+"):
+            # #+language: tr
+            content = line[2:]
+            if ":" in content:
+                k, v = content.split(":", 1)
+                meta_map[k.strip()] = v.strip()
+        elif line.startswith("#-index-name:"):
+            meta_map["index-name"] = line.split(":", 1)[1].strip()
+        elif line.startswith("#-display-name:"):
+            meta_map["display-name"] = line.split(":", 1)[1].strip()
+    return meta_map.get(key, "")
+
+
+def _find_table_file(table_id: str) -> str | None:
+    """Find the absolute path of a Liblouis table file by ID."""
+    possible_dirs = [
+        "/usr/share/liblouis/tables",
+        "/usr/local/share/liblouis/tables",
+    ]
+    for tables_dir in possible_dirs:
+        full_path = os.path.join(tables_dir, table_id)
+        if os.path.isfile(full_path):
+            return full_path
+    return None
+
+
 # ── İnsan-okunur isimlendirme (8 öncelikli dil) ─────────────────────────────
 
 @dataclass(frozen=True, slots=True)
@@ -244,11 +340,11 @@ class TableManifest:
     @staticmethod
     def _build_entry(table_id: str) -> TableManifestEntry:
         """Tek bir tablo için TableManifestEntry oluşturur."""
-        # Liblouis metadata'sı
-        language = louis.getTableInfo(table_id, "language")
-        table_type = louis.getTableInfo(table_id, "type")
-        dots_str = louis.getTableInfo(table_id, "dots")
-        contraction = louis.getTableInfo(table_id, "contraction")
+        # Liblouis metadata'sı (shim ile eski sürüm uyumluluğu)
+        language = _get_table_info(table_id, "language")
+        table_type = _get_table_info(table_id, "type")
+        dots_str = _get_table_info(table_id, "dots")
+        contraction = _get_table_info(table_id, "contraction")
 
         dots: int | None = int(dots_str) if dots_str else None
 

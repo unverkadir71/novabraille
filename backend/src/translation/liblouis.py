@@ -5,6 +5,7 @@
 #
 # Plan v9 referansı: Faz 2.1.1 — Liblouis Python Binding Wrapper
 # Liblouis sürümü: 3.38.0 (sistem kurulumu, /usr/local/share/liblouis/tables)
+# Compatibility: Falls back for liblouis < 3.34 (Debian apt package)
 
 from __future__ import annotations
 
@@ -118,7 +119,17 @@ class LiblouisWrapper:
             Tablo dosya adları listesi (örn. ['tr-g2.tbl', 'en-ueb-g1.ctb', ...]).
             Tam yol DEĞİL, yalnızca dosya adı.
         """
-        raw = louis.listTables()
+        if hasattr(louis, "listTables"):
+            raw = louis.listTables()  # type: ignore[attr-defined]
+        else:
+            # Fallback for liblouis < 3.34
+            import glob
+            tables: list[str] = []
+            for ext in (".ctb", ".utb", ".tbl"):
+                tables.extend(glob.glob(os.path.join(
+                    "/usr/share/liblouis/tables", f"*{ext}"
+                )))
+            raw = sorted(tables)
         return sorted({os.path.basename(p) for p in raw} | _KNOWN_TABLES_EXTRA)
 
     def list_tables_by_language(self, language: str) -> list[str]:
@@ -167,7 +178,11 @@ class LiblouisWrapper:
             Metadata değeri veya bilinmiyorsa None.
         """
         self._validate_table_id(table_id)
-        return louis.getTableInfo(table_id, key)  # type: ignore[no-any-return]
+        if hasattr(louis, "getTableInfo"):
+            return louis.getTableInfo(table_id, key)  # type: ignore[no-any-return,attr-defined]
+        # Fallback for liblouis < 3.34 — parse table file metadata
+        from .table_manifest import _get_table_info
+        return _get_table_info(table_id, key)
 
     def get_table_language(self, table_id: str) -> str | None:
         """Tablonun dil kodunu getirir."""
