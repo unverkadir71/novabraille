@@ -61,7 +61,7 @@ COPY --chown=nova:nova . /app
 WORKDIR /app
 
 # Environment
-ENV PYTHONPATH=/app/backend \
+ENV PYTHONPATH=/app/backend:/usr/lib/python3/dist-packages \
     PYTHONUNBUFFERED=1 \
     APP_MODE=self_hosted \
     DATABASE_URL=sqlite+aiosqlite:////data/nova-braille.db \
