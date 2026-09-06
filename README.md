@@ -6,7 +6,7 @@
 
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0--or--later-blue.svg)](LICENSE)
 [![GitHub release](https://img.shields.io/github/v/release/unverkadir71/novabraille)](https://github.com/unverkadir71/novabraille/releases)
-[![Docker Pulls](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fghcr.haya14busa.dev%2Fv2%2Funverkadir71%2Fnovabraille&query=$.pull_count&label=Docker%20Pulls)](https://github.com/unverkadir71/novabraille/pkgs/container/novabraille)
+[![Docker Pulls](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fghcr.haya14busa.dev%2Fv2%2Funverkadir71%2Fnovabraille&query=$.pull_count&label=Docker%20Pulls)](https://github.com/users/unverkadir71/packages/container/package/novabraille)
 
 ![Nova Braille translation interface](assets/screenshot.png)
 
