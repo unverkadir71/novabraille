@@ -11,7 +11,7 @@
 If you discover a security vulnerability in Nova Braille, please report it
 **privately via GitHub**:
 
-1. Go to [Security Advisories](https://github.com/kadirunver/novabraille/security/advisories/new)
+1. Go to [Security Advisories](https://github.com/unverkadir71/novabraille/security/advisories/new)
 2. Click "Report a vulnerability"
 3. Describe the vulnerability in detail (affected version, steps to reproduce, potential impact)
 

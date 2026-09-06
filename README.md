@@ -5,8 +5,8 @@
 > Run it on your own server for free.
 
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0--or--later-blue.svg)](LICENSE)
-[![GitHub release](https://img.shields.io/github/v/release/kadirunver/novabraille)](https://github.com/kadirunver/novabraille/releases)
-[![Docker Pulls](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fghcr.haya14busa.dev%2Fv2%2Fkadirunver%2Fnovabraille&query=$.pull_count&label=Docker%20Pulls)](https://github.com/kadirunver/novabraille/pkgs/container/novabraille)
+[![GitHub release](https://img.shields.io/github/v/release/unverkadir71/novabraille)](https://github.com/unverkadir71/novabraille/releases)
+[![Docker Pulls](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fghcr.haya14busa.dev%2Fv2%2Funverkadir71%2Fnovabraille&query=$.pull_count&label=Docker%20Pulls)](https://github.com/unverkadir71/novabraille/pkgs/container/novabraille)
 
 ![Nova Braille translation interface](assets/screenshot.png)
 
@@ -52,7 +52,7 @@ The application interface supports all 8 languages as well. You can switch the U
 
 ```bash
 # 1. Pull the image (beta tag recommended for stability)
-docker pull ghcr.io/kadirunver/novabraille:beta
+docker pull ghcr.io/unverkadir71/novabraille:beta
 
 # 2. Run
 docker run -d --name nova-braille --restart unless-stopped \
@@ -62,7 +62,7 @@ docker run -d --name nova-braille --restart unless-stopped \
   -e NOVA_ADMIN_EMAIL=admin@example.com \
   -e NOVA_ADMIN_PASSWORD=strong-password-here \
   -v nova-braille-data:/data \
-  ghcr.io/kadirunver/novabraille:beta
+  ghcr.io/unverkadir71/novabraille:beta
 
 # 3. Open in browser: http://localhost:9876
 ```
@@ -79,13 +79,13 @@ Don't have Docker? See the [installation guide](https://docs.docker.com/engine/i
 ### Single command (interactive wizard)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/kadirunver/novabraille/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/unverkadir71/novabraille/main/scripts/install.sh | bash
 ```
 
 ### Docker Compose (advanced users)
 
 ```bash
-curl -O https://raw.githubusercontent.com/kadirunver/novabraille/main/deploy/docker-compose.self-hosted.yml
+curl -O https://raw.githubusercontent.com/unverkadir71/novabraille/main/deploy/docker-compose.self-hosted.yml
 # Edit the .env file with your settings
 docker compose -f docker-compose.self-hosted.yml up -d
 ```
@@ -93,7 +93,7 @@ docker compose -f docker-compose.self-hosted.yml up -d
 ### Updating
 
 ```bash
-docker pull ghcr.io/kadirunver/novabraille:beta
+docker pull ghcr.io/unverkadir71/novabraille:beta
 docker stop nova-braille && docker rm nova-braille
 # Re-run the docker run command above
 ```
@@ -132,7 +132,7 @@ docker stop nova-braille && docker rm nova-braille
 ```bash
 # Requirements: Python >= 3.13, Liblouis 3.38.0, UV
 
-git clone https://github.com/kadirunver/novabraille.git
+git clone https://github.com/unverkadir71/novabraille.git
 cd novabraille
 
 # Virtual environment and dependencies

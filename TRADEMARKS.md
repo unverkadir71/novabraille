@@ -32,4 +32,4 @@ have made changes, you must use your own brand.
 ## Questions
 
 For trademark-related questions:
-- GitHub Issues: https://github.com/kadirunver/novabraille/issues
+- GitHub Issues: https://github.com/unverkadir71/novabraille/issues

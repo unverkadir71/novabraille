@@ -35,7 +35,7 @@ Types: feat, fix, refactor, test, docs, chore, ci
 ```bash
 # Requirements: Python >= 3.13, Liblouis 3.38.0, UV
 
-git clone https://github.com/kadirunver/novabraille.git
+git clone https://github.com/unverkadir71/novabraille.git
 cd novabraille
 uv venv
 source .venv/bin/activate

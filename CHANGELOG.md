@@ -50,5 +50,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 AGPL-3.0-or-later
 
-[Unreleased]: https://github.com/kadirunver/novabraille/compare/v1.0.0-beta...main
-[v1.0.0-beta]: https://github.com/kadirunver/novabraille/releases/tag/v1.0.0-beta
+[Unreleased]: https://github.com/unverkadir71/novabraille/compare/v1.0.0-beta...main
+[v1.0.0-beta]: https://github.com/unverkadir71/novabraille/releases/tag/v1.0.0-beta

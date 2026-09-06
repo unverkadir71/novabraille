@@ -1,6 +1,6 @@
 # Email service — SMTP delivery with Jinja2 templates and Dramatiq worker
 #
-# Hosted mod: kadirunver@gorbil.com SMTP (my.mailbux.com:587 STARTTLS)
+# Hosted mod: unverkadir71@gorbil.com SMTP (my.mailbux.com:587 STARTTLS)
 # Self-hosted mod: kullanıcının kendi SMTP ayarları
 # Plan v9 referansı: Bölüm 1.3, 1.5.2
 

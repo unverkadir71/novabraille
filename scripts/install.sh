@@ -173,7 +173,7 @@ docker run -d \
     -e PORT="$PORT" \
     $SMTP_ENV \
     -v nova-braille-data:/data \
-    ghcr.io/kadirunver/novabraille:beta
+    ghcr.io/unverkadir71/novabraille:beta
 
 echo ""
 echo -e "${GREEN}╔══════════════════════════════════════════╗${NC}"

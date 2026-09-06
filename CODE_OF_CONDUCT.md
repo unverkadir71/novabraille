@@ -39,7 +39,7 @@ or harmful.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at
-GitHub Issues: https://github.com/kadirunver/novabraille/issues.
+GitHub Issues: https://github.com/unverkadir71/novabraille/issues.
 
 ## Attribution
 
