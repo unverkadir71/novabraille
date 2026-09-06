@@ -11,6 +11,7 @@ FROM python:3.13-slim AS builder
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     liblouis-dev \
+    python3-louis \
     pandoc \
     tesseract-ocr \
     tesseract-ocr-tur \
@@ -38,6 +39,7 @@ FROM python:3.13-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     liblouis-dev \
+    python3-louis \
     pandoc \
     tesseract-ocr \
     tesseract-ocr-tur \
@@ -62,7 +64,7 @@ WORKDIR /app
 ENV PYTHONPATH=/app/backend \
     PYTHONUNBUFFERED=1 \
     APP_MODE=self_hosted \
-    DATABASE_URL=sqlite+aiosqlite:///data/nova-braille.db \
+    DATABASE_URL=sqlite+aiosqlite:////data/nova-braille.db \
     NOVA_ADMIN_EMAIL="" \
     NOVA_ADMIN_PASSWORD=""
 
