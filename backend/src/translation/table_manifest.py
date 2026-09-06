@@ -3,10 +3,15 @@
 # Single source of truth for available Braille tables.
 # Built at startup by scanning the Liblouis table directory.
 # Plan v9 referansı: Faz 2.1.2 — Tablo manifest ve allowlist sistemi
+#
+# Compatibility: louis.listTables() available in liblouis >= 3.34.0.
+# Falls back to filesystem scan for older versions (e.g., Debian 3.33.0).
 
 from __future__ import annotations
 
+import glob
 import logging
+import os
 from dataclasses import dataclass
 from typing import ClassVar
 
@@ -15,6 +20,35 @@ import louis  # type: ignore[import-untyped]
 from .types import BrailleGrade
 
 logger = logging.getLogger(__name__)
+
+
+# ── Compatibility: louis.listTables() shim ────────────────────────────────
+
+def _list_tables() -> list[str]:
+    """List all available Liblouis table files.
+
+    Uses the native louis.listTables() if available (liblouis >= 3.34.0).
+    Falls back to scanning the filesystem table directory.
+    """
+    if hasattr(louis, "listTables"):
+        return sorted(louis.listTables())  # type: ignore[attr-defined]
+
+    # Filesystem fallback for liblouis < 3.34.0
+    possible_dirs = [
+        "/usr/share/liblouis/tables",
+        "/usr/local/share/liblouis/tables",
+    ]
+    table_extensions = {".ctb", ".utb", ".tbl"}
+    tables: list[str] = []
+
+    for tables_dir in possible_dirs:
+        if not os.path.isdir(tables_dir):
+            continue
+        for ext in table_extensions:
+            tables.extend(glob.glob(os.path.join(tables_dir, f"*{ext}")))
+        break  # Use first found directory
+
+    return sorted(tables)
 
 
 # ── İnsan-okunur isimlendirme (8 öncelikli dil) ─────────────────────────────
@@ -186,13 +220,11 @@ class TableManifest:
     @classmethod
     def _enumerate(cls) -> list[TableManifestEntry]:
         """Tüm Liblouis tablolarını tarar ve metadata ile zenginleştirir."""
-        all_tables = sorted(louis.listTables())
+        all_tables = sorted(_list_tables())
         entries: list[TableManifestEntry] = []
         seen_ids: set[str] = set()
 
         for full_path in all_tables:
-            import os
-
             table_id = os.path.basename(full_path)
             if table_id in seen_ids:
                 continue
