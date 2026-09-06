@@ -31,7 +31,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
     "pymupdf>=1.28" "openpyxl>=3.1" "python-docx>=1.1" "lxml>=6.0" \
     "dramatiq[redis]>=2.2" "structlog>=26.0" "orjson>=3.10" \
     "httpx>=0.28" "tenacity>=9" "jinja2>=3.1" "aiosmtplib>=3" \
-    "cryptography>=50"
+    "aiosqlite>=0.20" "cryptography>=50"
 
 # ── Stage 2: Runtime ──────────────────────────────────────────
 FROM python:3.13-slim
