@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nova Braille — çeviri arayüzü.">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Çeviri — Nova Braille</title>
+    <link rel="stylesheet" href="../shared/css/tokens.css">
+    <link rel="stylesheet" href="../shared/css/prefs.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="../shared/js/preferences.js"></script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Ana içeriğe atla</a>
+
+    <div class="offline-banner" id="offline-banner" hidden>İnternet bağlantınız kesildi. Lütfen bağlantınızı kontrol edin.</div>
+
+    <div class="app-shell">
+        <aside class="sidebar" aria-label="Ana menü">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">Nova Braille</a>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html" aria-current="page"><span class="nav-icon" aria-hidden="true">⠃</span> Çeviri</a></li>
+                    <li><a href="profiles.html"><span class="nav-icon" aria-hidden="true">📋</span> Profiller</a></li>
+                    <li><a href="history.html"><span class="nav-icon" aria-hidden="true">🕘</span> Geçmiş</a></li>
+                    <li id="nav-subscription" hidden><a href="subscription.html"><span class="nav-icon" aria-hidden="true">💳</span> Abonelik</a></li>
+                    <li><a href="settings.html"><span class="nav-icon" aria-hidden="true">⚙</span> Ayarlar</a></li>
+                </ul>
+                <ul id="nav-admin-section" hidden>
+                    <li class="nav-section-label" aria-hidden="true">Yönetim</li>
+                    <li><a href="admin/index.html"><span class="nav-icon" aria-hidden="true">🛡</span> Admin Paneli</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <span class="user-name" id="sidebar-user-name">…</span>
+                    <span class="user-email" id="sidebar-user-email">…</span>
+                </div>
+                <button type="button" class="btn btn-ghost" id="logout-btn" style="width:100%">Çıkış Yap</button>
+            </div>
+        </aside>
+
+        <div class="main-area">
+            <header class="topbar">
+                <button class="hamburger" aria-expanded="false" aria-controls="sidebar" aria-label="Menüyü aç/kapat">
+                    <span></span><span></span><span></span>
+                </button>
+                <span class="topbar-title">Çeviri</span>
+                <div class="header-controls">
+    <button type="button" class="pref-btn" data-pref-theme role="switch" aria-checked="false" aria-label="Açık tema">
+        <span class="pref-btn-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
+        <span class="pref-btn-label">Açık tema</span>
+    </button>
+    <div class="pref-menu">
+        <button type="button" class="pref-btn" data-pref-locale-btn aria-haspopup="menu" aria-expanded="false" aria-controls="locale-menu" aria-label="Dil: Türkçe">
+            <span class="pref-btn-icon" aria-hidden="true">🌐</span>
+            <span class="pref-btn-label">Türkçe</span>
+        </button>
+        <ul class="pref-menu-list" role="menu" id="locale-menu" hidden>
+            <li role="none"><button type="button" role="menuitem" data-locale="tr" lang="tr">Türkçe</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="en" lang="en">English</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="de" lang="de">Deutsch</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="fr" lang="fr">Français</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="es" lang="es">Español</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="ar" lang="ar">العربية</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="ru" lang="ru">Русский</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="pt" lang="pt">Português</button></li>
+        </ul>
+    </div>
+</div>
+            </header>
+
+            <main id="main-content" class="page-body page-body-wide">
+                <div class="page-header">
+                    <h1>Metinden Braille'e Çeviri</h1>
+                    <p class="page-intro">Metninizi yazın ya da belge yükleyin; Braille'e çevirelim.</p>
+                </div>
+
+                <!-- Sekmeli kapsayıcı -->
+                <div class="translate-tabs" role="tablist" aria-label="Çeviri yöntemi seçimi">
+                    <button type="button" role="tab" id="tab-text" class="translate-tab" aria-selected="true" aria-controls="panel-text" data-tab="text">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        Metin Oluştur
+                    </button>
+                    <button type="button" role="tab" id="tab-file" class="translate-tab" aria-selected="false" aria-controls="panel-file" data-tab="file">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        Dosya Yükle
+                    </button>
+                </div>
+
+                <!-- Panel: Metin Oluştur -->
+                <div role="tabpanel" id="panel-text" class="translate-panel" aria-labelledby="tab-text">
+                    <section class="card" aria-label="Kaynak metin">
+                        <h2>Kaynak Metin</h2>
+                        <p class="page-intro">Braille'e çevirmek istediğiniz metni yazın veya yapıştırın.</p>
+                        <div class="form-field">
+                            <label for="source-text">Metin</label>
+                            <textarea id="source-text" rows="12" placeholder="Metninizi buraya yazın veya yapıştırın…"></textarea>
+                        </div>
+                    </section>
+
+                    <div id="options-text" class="translate-options"></div>
+                </div>
+
+                <!-- Panel: Dosya Yükle -->
+                <div role="tabpanel" id="panel-file" class="translate-panel" hidden aria-labelledby="tab-file">
+                    <section class="card upload-card" aria-label="Dosya yükleme">
+                        <h2>Belge Yükleyin</h2>
+                        <p class="page-intro" id="upload-intro">Belgenizi yükleyin, metin otomatik ayıklansın. Taranmış PDF'ler OCR ile işlenir. TXT, DOCX, DOC, RTF, ODT, HTML, PDF, XLSX ve DAISY formatları desteklenir.</p>
+                        <div class="file-upload-form">
+                            <div class="form-field">
+                                <label for="upload-format-select">Dosya Formatı</label>
+                                <select id="upload-format-select" required>
+                                    <option value="">— Seçin —</option>
+                                </select>
+                                <p class="field-hint" id="upload-format-info" aria-live="polite">Yüklemek istediğiniz dosya türünü seçin.</p>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary" id="file-select-btn" disabled>
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                    Dosya Seç
+                                </button>
+                            </div>
+                            <p class="field-hint" id="file-hint"></p>
+                        </div>
+                        <input type="file" id="file-input" accept="" class="sr-only">
+                    </section>
+
+                    <div id="file-result" hidden>
+                        <section class="card" aria-label="Ayıklanan metin">
+                            <h2>Ayıklanan Metin</h2>
+                            <div class="form-field">
+                                <label for="source-text-file">Metin (düzenleyebilirsiniz)</label>
+                                <textarea id="source-text-file" rows="12" placeholder="Dosyadan ayıklanan metin burada görünecek…"></textarea>
+                            </div>
+                        </section>
+                        <div id="options-file" class="translate-options"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="../shared/js/api.js" defer></script>
+    <script src="../shared/js/ui.js" defer></script>
+    <script src="js/translate.js?v=20260830-6" defer></script>
+</body>
+</html>

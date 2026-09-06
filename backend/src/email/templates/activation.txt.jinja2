@@ -1,0 +1,18 @@
+<!-- Activation email — plain text -->
+{% extends "base.txt.jinja2" %}
+{% block subject %}Nova Braille — Hesabınızı Etkinleştirin{% endblock %}
+{% block body %}
+Merhaba{% if display_name %} {{ display_name }}{% endif %},
+
+Nova Braille hesabınız oluşturuldu. Hesabınızı etkinleştirmek
+için aşağıdaki bağlantıya tıklayın:
+
+{{ activation_url }}
+
+Bu bağlantı 24 saat süreyle geçerlidir.
+
+Eğer bu hesabı siz oluşturmadıysanız, bu e-postayı dikkate almayın.
+
+Saygılarımızla,
+Nova Braille Ekibi
+{% endblock %}

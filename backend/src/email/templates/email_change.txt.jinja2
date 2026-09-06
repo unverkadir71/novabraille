@@ -1,0 +1,14 @@
+{% extends "base.txt.jinja2" %}
+
+{% block body %}
+Merhaba{% if display_name %} {{ display_name }}{% endif %},
+
+Nova Braille hesabınızın e-posta adresi değişikliği için onay gerekiyor. Aşağıdaki bağlantıya tıklayarak yeni e-posta adresinizi doğrulayabilirsiniz:
+
+{{ confirm_url }}
+
+Bu bağlantı 24 saat geçerlidir. Eğer bu değişikliği siz yapmadıysanız, bu e-postayı dikkate almayın ve hesap güvenliğiniz için şifrenizi değiştirin.
+
+Saygılarımızla,
+Nova Braille Ekibi
+{% endblock %}

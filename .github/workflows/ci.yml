@@ -1,0 +1,172 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.13"
+  LIBLOUIS_VERSION: "3.38.0"
+
+jobs:
+  lint:
+    name: Lint & Format
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install UV
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12"
+
+      - name: Set up Python
+        run: uv python install ${{ env.PYTHON_VERSION }}
+
+      - name: Install dev dependencies
+        run: uv pip install --system -e ".[dev]"
+
+      - name: Ruff lint
+        run: uv run ruff check backend/src/ tests/
+
+      - name: Ruff format check
+        run: uv run ruff format --check backend/src/ tests/
+
+  typecheck:
+    name: Type Check
+    runs-on: ubuntu-24.04
+    needs: [lint]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install UV
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12"
+
+      - name: Set up Python
+        run: uv python install ${{ env.PYTHON_VERSION }}
+
+      - name: Install system deps
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq build-essential autoconf automake libtool pkg-config python3-dev
+
+      - name: Build Liblouis ${{ env.LIBLOUIS_VERSION }}
+        run: |
+          curl -fsSLO https://github.com/liblouis/liblouis/releases/download/v${LIBLOUIS_VERSION}/liblouis-${LIBLOUIS_VERSION}.tar.gz
+          tar xzf liblouis-${LIBLOUIS_VERSION}.tar.gz
+          cd liblouis-${LIBLOUIS_VERSION}
+          ./configure --prefix=/usr/local
+          make -j$(nproc)
+          sudo make install
+          sudo ldconfig
+
+      - name: Install dev dependencies
+        run: uv pip install --system -e ".[dev]"
+
+      - name: Install Liblouis Python binding
+        run: uv pip install --system liblouis-${LIBLOUIS_VERSION}/python
+
+      - name: Mypy
+        run: uv run mypy backend/src/
+
+  test:
+    name: Tests (${{ matrix.db }})
+    runs-on: ubuntu-24.04
+    needs: [lint]
+    strategy:
+      fail-fast: false
+      matrix:
+        db: [sqlite]
+        # postgresql: Faz 1 migration sonrası etkinleştirilecek
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: novabraille
+          POSTGRES_PASSWORD: novabraille
+          POSTGRES_DB: novabraille_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install UV
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12"
+
+      - name: Set up Python
+        run: uv python install ${{ env.PYTHON_VERSION }}
+
+      - name: Install system deps
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq build-essential autoconf automake libtool pkg-config python3-dev
+
+      - name: Build Liblouis ${{ env.LIBLOUIS_VERSION }}
+        run: |
+          curl -fsSLO https://github.com/liblouis/liblouis/releases/download/v${LIBLOUIS_VERSION}/liblouis-${LIBLOUIS_VERSION}.tar.gz
+          tar xzf liblouis-${LIBLOUIS_VERSION}.tar.gz
+          cd liblouis-${LIBLOUIS_VERSION}
+          ./configure --prefix=/usr/local
+          make -j$(nproc)
+          sudo make install
+          sudo ldconfig
+
+      - name: Install dev dependencies
+        run: uv pip install --system -e ".[dev]"
+
+      - name: Install Liblouis Python binding
+        run: uv pip install --system liblouis-${LIBLOUIS_VERSION}/python
+
+      - name: Set database URL
+        run: |
+          if [ "${{ matrix.db }}" = "postgresql" ]; then
+            echo "DATABASE_URL=postgresql+asyncpg://novabraille:novabraille@localhost:5432/novabraille_test" >> $GITHUB_ENV
+          else
+            echo "DATABASE_URL=sqlite+aiosqlite:///./nova-braille-test.db" >> $GITHUB_ENV
+          fi
+
+      - name: Run tests
+        run: uv run pytest tests/ -v --cov=backend/src --cov-report=term-missing --cov-report=xml
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage.xml
+
+  secrets:
+    name: Secret Scanning
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Scan for secrets
+        run: |
+          echo "=== High-entropy string check ==="
+          git grep -nP '[A-Za-z0-9+/]{40,}' -- ':!.github/workflows/*' ':!*.md' ':!poetry.lock' ':!.gitignore' || true
+          echo "=== Common secret patterns ==="
+          git grep -nP '(api[_-]?key|apikey|secret|password|token)\s*[:=]\s*["\x27][^"\x27]{8,}' -- ':!.github/workflows/*' ':!*.md' ':!.env.example' ':!.gitignore' || true
+          echo "=== Check complete ==="
+
+  # TODO (Faz 7): Docker build test — Dockerfile eklendikten sonra etkinleştir
+  # docker-build:
+  #   name: Docker Build Test
+  #   runs-on: ubuntu-24.04
+  #   needs: [lint]

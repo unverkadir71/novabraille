@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nova Braille'i kendi sunucunuzda barındırın. Açık kaynak, Docker ile kolay kurulum.">
+    <meta property="og:title" content="Kendi Sunucunuzda">
+    <meta property="og:description" content="Nova Braille'i kendi sunucunuzda barındırın. Açık kaynak, Docker ile kolay kurulum.">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="self-hosted.html">
+    <title>Kendi Sunucunuzda — Nova Braille</title>
+    <link rel="stylesheet" href="../shared/css/tokens.css">
+    <link rel="stylesheet" href="../shared/css/prefs.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../shared/js/preferences.js"></script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Ana içeriğe atla</a>
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="logo">Nova Braille</a>
+            <nav class="site-nav" id="main-nav" aria-label="Ana menü">
+                <ul>
+                    <li><a href="index.html">Ana Sayfa</a></li>
+                    <li><a href="features.html">Özellikler</a></li>
+                    <li><a href="pricing.html">Fiyatlandırma</a></li>
+                    <li><a href="self-hosted.html" aria-current="page">Self-Hosted</a></li>
+                    <li><a href="docs.html">Belgeler</a></li>
+                    <li><a href="support.html">Destek</a></li>
+                </ul>
+            </nav>
+            <a href="../dashboard/login.html" class="btn btn-primary header-login">Giriş Yap</a>
+            <button class="hamburger" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menü">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="header-controls">
+    <button type="button" class="pref-btn" data-pref-theme role="switch" aria-checked="false" aria-label="Açık tema">
+        <span class="pref-btn-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
+        <span class="pref-btn-label">Açık tema</span>
+    </button>
+    <div class="pref-menu">
+        <button type="button" class="pref-btn" data-pref-locale-btn aria-haspopup="menu" aria-expanded="false" aria-controls="locale-menu" aria-label="Dil: Türkçe">
+            <span class="pref-btn-icon" aria-hidden="true">🌐</span>
+            <span class="pref-btn-label">Türkçe</span>
+        </button>
+        <ul class="pref-menu-list" role="menu" id="locale-menu" hidden>
+            <li role="none"><button type="button" role="menuitem" data-locale="tr" lang="tr">Türkçe</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="en" lang="en">English</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="de" lang="de">Deutsch</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="fr" lang="fr">Français</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="es" lang="es">Español</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="ar" lang="ar">العربية</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="ru" lang="ru">Русский</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="pt" lang="pt">Português</button></li>
+        </ul>
+    </div>
+</div>
+
+        </div>
+        <div class="mobile-nav" id="mobile-nav">
+            <a href="index.html">Ana Sayfa</a>
+            <a href="features.html">Özellikler</a>
+            <a href="pricing.html">Fiyatlandırma</a>
+            <a href="self-hosted.html" aria-current="page">Self-Hosted</a>
+            <a href="docs.html">Belgeler</a>
+            <a href="support.html">Destek</a>
+            <a href="../dashboard/login.html" class="btn btn-primary">Giriş Yap</a>
+        </div>
+    </header>
+    <main id="main-content" class="page-content">
+        <section class="page-hero">
+            <div class="container">
+                <h1>Kendi Sunucunuzda Barındırın</h1>
+                <p class="hero-subtitle">Nova Braille AGPL-3.0 lisansıyla tamamen açık kaynak. Docker ile tek komutla kendi sunucunuza kurun. Tüm özellikler sınırsız ve ücretsiz. Verilerinizin kontrolü tamamen sizde.</p>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container">
+                <div class="install-command">
+                    <h2>Tek Komutla Kurulum</h2>
+                    <p>SSH ile sunucunuza bağlanın ve aşağıdaki komutu çalıştırın:</p>
+                    <pre class="code-block" aria-label="Nova Braille kurulum komutu"><code>curl -fsSL https://get.novabraille.com | bash</code></pre>
+                    <p class="install-note">Bu komut Docker ve Docker Compose'u kontrol eder, gerekirse kurar, Nova Braille'i indirir, sizi terminal onboarding sihirbazına yönlendirir ve birkaç dakika içinde kullanıma hazır hale getirir.</p>
+                </div>
+            </div>
+        </section>
+        <section class="section section-alt">
+            <div class="container">
+                <h2 class="section-title">Sistem Gereksinimleri</h2>
+                <p class="section-intro">Nova Braille, Docker Compose ile 4 konteyner olarak çalışır. Aşağıdaki gereksinimler, kapsamlı bileşen analizi ve bağımsız kaynaklardan alınan referans verilere dayanmaktadır.</p>
+                <div class="grid grid-3">
+                    <article class="card req-card">
+                        <h3>Minimal</h3>
+                        <p class="req-label">Kişisel kullanım, 1-2 kullanıcı</p>
+                        <ul class="feature-list" aria-label="Minimal sistem gereksinimleri">
+                            <li>1 GB RAM</li>
+                            <li>1 CPU çekirdeği</li>
+                            <li>5 GB disk alanı</li>
+                            <li>SQLite (varsayılan)</li>
+                            <li>Redis olmadan çalışır</li>
+                            <li>64-bit Linux (amd64/arm64)</li>
+                        </ul>
+                        <p class="req-note">Raspberry Pi 4 (2 GB), giriş seviyesi VDS veya eski bir bilgisayarda çalışır.</p>
+                    </article>
+                    <article class="card req-card req-featured">
+                        <h3>Önerilen</h3>
+                        <p class="req-label">Aile, küçük ofis, 2-10 kullanıcı</p>
+                        <ul class="feature-list" aria-label="Önerilen sistem gereksinimleri">
+                            <li>2 GB RAM</li>
+                            <li>2 CPU çekirdeği</li>
+                            <li>10 GB disk alanı</li>
+                            <li>PostgreSQL + Redis</li>
+                            <li>Tüm servisler aktif</li>
+                            <li>amd64 veya arm64 mimari</li>
+                        </ul>
+                        <p class="req-note">Çoğu kullanıcı için ideal. Tüm özellikler sorunsuz çalışır.</p>
+                    </article>
+                    <article class="card req-card">
+                        <h3>Profesyonel</h3>
+                        <p class="req-label">Okul, kurum, 10-100+ kullanıcı</p>
+                        <ul class="feature-list" aria-label="Profesyonel sistem gereksinimleri">
+                            <li>4 GB RAM</li>
+                            <li>4 CPU çekirdeği</li>
+                            <li>20 GB disk alanı</li>
+                            <li>PostgreSQL + Redis</li>
+                            <li>Yedekleme aktif</li>
+                            <li>amd64 sunucu önerilir</li>
+                        </ul>
+                        <p class="req-note">Eş zamanlı çoklu çeviri, yedekleme ve yüksek kullanılabilirlik için.</p>
+                    </article>
+                </div>
+                <details class="faq-item req-detail">
+                    <summary>Bu gereksinimler nasıl hesaplandı?</summary>
+                    <div class="req-breakdown">
+                        <p>Nova Braille 6 ana bileşenden oluşur. Her birinin bellek kullanımı bağımsız olarak analiz edildi:</p>
+                        <dl class="req-dl">
+                            <dt>Linux + Docker Engine</dt>
+                            <dd>~150-300 MB. Docker'ın kendisi konteyner yönetimi için bellek kullanır. GUI olmayan bir Linux dağıtımında (Debian/Ubuntu Server) işletim sistemi ~100 MB ile çalışır.</dd>
+                            <dt>FastAPI + Uvicorn (Python 3.13)</dt>
+                            <dd>~100-200 MB (1 worker). Python 3.13-slim imajı, FastAPI 0.141 ve tüm bağımlılıklarla (SQLAlchemy, Pydantic, Dramatiq, structlog, httpx) yüklendiğinde ~100 MB baz bellek kullanır. Her ek worker ~80-100 MB ekler.</dd>
+                            <dt>PostgreSQL 16</dt>
+                            <dd>~150-500 MB. Hafif konfigürasyonda (shared_buffers=32MB, work_mem=2MB) 140 MB ile çalışabilir. Önerilen konfigürasyonda (shared_buffers=64MB) ~200-300 MB. Kurumsal kullanımda ~500 MB. Kaynak: PostgreSQL resmî dokümantasyonu, Docker Hub imaj referansları ve topluluk benchmark'ları.</dd>
+                            <dt>Redis 7</dt>
+                            <dd>~32-128 MB. Alpine tabanlı imaj idle'da ~32 MB tüketir. maxmem 128 MB olarak ayarlandığında kuyruk işleri için yeterlidir. Kaynak: Redis resmî dokümantasyonu, redis:7-alpine Docker imajı.</dd>
+                            <dt>Dramatiq Worker</dt>
+                            <dd>~50-80 MB. Python process olarak e-posta gönderimi ve arka plan işleri için çalışır. Redis bağlantısıyla birlikte bellek ayak izi.</dd>
+                            <dt>Dosya İşleme (Pandoc + PyMuPDF)</dt>
+                            <dd>Pandoc 3.10: DOCX/RTF/ODT/HTML dönüşümünde ~30-50 MB peak. PyMuPDF 1.28: PDF metin çıkarmada sayfa başına ~1-5 MB. 25 MB dosya limitinde peak ~100 MB.</dd>
+                            <dt>LibreOffice Headless + Tesseract OCR</dt>
+                            <dd>LibreOffice 25.2 (~500 MB disk): DOC formatının metne dönüşümü için headless modda çalışır, ~80-150 MB peak bellek. Tesseract OCR 5.5 (~100 MB disk, 8 dil tessdata_best): taranmış PDF'ler için 8 dilde en yüksek doğruluklu metin tanıma, sayfa başına ~100-200 MB peak.</dd>
+                            <dt>Liblouis 3.38.0</dt>
+                            <dd>C kütüphanesi, ihmal edilebilir (&lt;10 MB). 141 Braille tablosu toplam 15 MB disk kullanır, dinamik olarak belleğe yüklenir. Kaynak: Liblouis GitHub deposu, proje ölçümleri.</dd>
+                            <dt>Nginx</dt>
+                            <dd>~20-30 MB. Statik dosya sunumu ve reverse proxy. Hafif ve minimal kaynak kullanır.</dd>
+                        </dl>
+                        <p><strong>Hesaplama yöntemi:</strong> Minimal konfigürasyonda (SQLite, Redis yok, LibreOffice/Tesseract yok) toplam ~500 MB. Önerilen konfigürasyonda (PostgreSQL + Redis + LibreOffice + Tesseract) toplam ~2 GB. Her seviyeye %25-40 güvenlik payı eklendi ve en yakın tam sayıya yuvarlandı.</p>
+                        <p><strong>Veri kaynakları:</strong> PostgreSQL Docker imajı, Redis dokümantasyonu, PyMuPDF API referansı, Pandoc SSS, LibreOffice resmî dokümantasyonu, Tesseract OCR dokümantasyonu (tessdata_best), Liblouis 3.38.0 sürüm notları.</p>
+                    </div>
+                </details>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Neden Self-Hosted?</h2>
+                <div class="grid grid-2">
+                    <div class="card">
+                        <h3>Tam Veri Kontrolü</h3>
+                        <p>Tüm verileriniz kendi sunucunuzda kalır. Hiçbir çeviri metni, kullanıcı bilgisi veya dosya dışarı çıkmaz. Çeviri geçmişiniz AES-256-GCM ile şifrelenir, şifreleme anahtarı yalnızca sizdedir.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Sınırsız Kullanım</h3>
+                        <p>Hiçbir karakter kotası, dosya limiti veya profil sınırlaması yoktur. Tüm özellikler — 8 dil, tüm dosya formatları, 3 çıktı modu, BRF/BRL üretici — sınırsız olarak kullanılabilir.</p>
+                    </div>
+                    <div class="card">
+                        <h3>AGPL-3.0 Lisansı</h3>
+                        <p>GNU Affero General Public License v3.0 ile lisanslanmıştır. Kaynak kodunu inceleyebilir, değiştirebilir, kendi ihtiyaçlarınıza uyarlayabilirsiniz. Topluluğa katkıda bulunabilir, kendi Braille tablolarınızı ekleyebilirsiniz.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Çoklu Mimari Desteği</h3>
+                        <p>Docker imajımız hem amd64 (x86_64) hem de arm64 (ARM, Raspberry Pi, Apple Silicon) için üretilir. Docker otomatik olarak doğru mimariyi seçer. Debian 12+, Ubuntu 22.04+, Fedora 39+ ve ARM tabanlı sistemlerde çalışır.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section section-alt">
+            <div class="container">
+                <h2 class="section-title">Desteklenen Platformlar</h2>
+                <div class="grid grid-3 platform-grid">
+                    <div class="card platform-card">
+                        <h3>Linux (amd64)</h3>
+                        <p>Debian 12+, Ubuntu 22.04+, Fedora 39+, RHEL 9</p>
+                        <p>Docker Engine 24+ ile tam destek. Intel ve AMD işlemciler.</p>
+                    </div>
+                    <div class="card platform-card">
+                        <h3>Linux (arm64)</h3>
+                        <p>Raspberry Pi OS, Ubuntu Server ARM, Debian ARM</p>
+                        <p>Raspberry Pi 4/5, Apple Silicon Mac (Linux VM), ARM tabanlı sunucular.</p>
+                    </div>
+                    <div class="card platform-card">
+                        <h3>Docker Compose</h3>
+                        <p>Tüm platformlarda aynı docker-compose.yml</p>
+                        <p>İster amd64 ister arm64, aynı komutla kurulum. Docker otomatik mimari seçimi yapar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Kurulum Sonrası</h2>
+                <div class="feature-detail">
+                    <h2>Discourse Tarzı Kolay Kurulum</h2>
+                    <p>Kurulum sonrası sizi terminal onboarding sihirbazı karşılar: domain adresi, admin e-posta ve parolası, SMTP ayarları (isteğe bağlı). Ardından tarayıcıdan admin paneline giriş yaparak site adı, logo, dil ve zaman dilimi gibi ayarları yapılandırabilirsiniz.</p>
+                </div>
+                <div class="feature-detail">
+                    <h2>Web Tabanlı Admin Paneli</h2>
+                    <p>Discourse benzeri kapsamlı bir yönetici paneli sunulur. Kullanıcı yönetimi, e-posta ayarları, yedekleme (BorgBackup + restic), güncelleme kontrolü, sistem logları ve site ayarlarının tamamı tarayıcı üzerinden yönetilir. SSH'a bağlanmanız gerekmez.</p>
+                </div>
+                <div class="feature-detail">
+                    <h2>Destek ve Topluluk</h2>
+                    <p>GitHub Discussions üzerinden topluluk desteği alabilir, hata bildirimi yapabilir ve özellik isteğinde bulunabilirsiniz. Self-hosted kullanıcılar için kurulum, güncelleme ve sorun giderme belgeleri docs.novabraille.com adresinde yayınlanır.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Nova Braille</p>
+            <nav aria-label="Alt menü">
+                <ul>
+                    <li><a href="privacy.html">Gizlilik Politikası</a></li>
+                    <li><a href="terms.html">Kullanım Koşulları</a></li>
+                    <li><a href="kvkk.html">KVKK</a></li>
+                    <li><a href="refund.html">İade/İptal</a></li>
+                    <li><a href="accessibility.html">Erişilebilirlik Bildirimi</a></li>
+                    <li><a href="contact.html">İletişim</a></li>
+                    <li><a href="https://status.novabraille.com" target="_blank" rel="noopener noreferrer">Sistem Durumu</a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const mobileNav = document.getElementById('mobile-nav');
+        hamburger.addEventListener('click', function () {
+            const expanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !expanded);
+            mobileNav.classList.toggle('open');
+        });
+    </script>
+    <script src="../shared/js/cookie-consent.js" defer></script>
+</body>
+</html>

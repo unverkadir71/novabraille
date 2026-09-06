@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nova Braille — çeviri profilleri.">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Profiller — Nova Braille</title>
+    <link rel="stylesheet" href="../shared/css/tokens.css">
+    <link rel="stylesheet" href="../shared/css/prefs.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="../shared/js/preferences.js"></script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Ana içeriğe atla</a>
+
+    <div class="offline-banner" id="offline-banner" hidden>İnternet bağlantınız kesildi.</div>
+
+    <div class="app-shell">
+        <aside class="sidebar" aria-label="Ana menü">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">Nova Braille</a>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><span class="nav-icon" aria-hidden="true">⠃</span> Çeviri</a></li>
+                    <li><a href="profiles.html" aria-current="page"><span class="nav-icon" aria-hidden="true">📋</span> Profiller</a></li>
+                    <li><a href="history.html"><span class="nav-icon" aria-hidden="true">🕘</span> Geçmiş</a></li>
+                    <li id="nav-subscription" hidden><a href="subscription.html"><span class="nav-icon" aria-hidden="true">💳</span> Abonelik</a></li>
+                    <li><a href="settings.html"><span class="nav-icon" aria-hidden="true">⚙</span> Ayarlar</a></li>
+                </ul>
+                <ul id="nav-admin-section" hidden>
+                    <li class="nav-section-label" aria-hidden="true">Yönetim</li>
+                    <li><a href="admin/index.html"><span class="nav-icon" aria-hidden="true">🛡</span> Admin Paneli</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <span class="user-name" id="sidebar-user-name">…</span>
+                    <span class="user-email" id="sidebar-user-email">…</span>
+                </div>
+                <button type="button" class="btn btn-ghost" id="logout-btn" style="width:100%">Çıkış Yap</button>
+            </div>
+        </aside>
+
+        <div class="main-area">
+            <header class="topbar">
+                <button class="hamburger" aria-expanded="false" aria-controls="sidebar" aria-label="Menüyü aç/kapat">
+                    <span></span><span></span><span></span>
+                </button>
+                <span class="topbar-title">Profiller</span>
+                <div class="header-controls">
+    <button type="button" class="pref-btn" data-pref-theme role="switch" aria-checked="false" aria-label="Açık tema">
+        <span class="pref-btn-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
+        <span class="pref-btn-label">Açık tema</span>
+    </button>
+    <div class="pref-menu">
+        <button type="button" class="pref-btn" data-pref-locale-btn aria-haspopup="menu" aria-expanded="false" aria-controls="locale-menu" aria-label="Dil: Türkçe">
+            <span class="pref-btn-icon" aria-hidden="true">🌐</span>
+            <span class="pref-btn-label">Türkçe</span>
+        </button>
+        <ul class="pref-menu-list" role="menu" id="locale-menu" hidden>
+            <li role="none"><button type="button" role="menuitem" data-locale="tr" lang="tr">Türkçe</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="en" lang="en">English</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="de" lang="de">Deutsch</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="fr" lang="fr">Français</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="es" lang="es">Español</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="ar" lang="ar">العربية</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="ru" lang="ru">Русский</button></li>
+            <li role="none"><button type="button" role="menuitem" data-locale="pt" lang="pt">Português</button></li>
+        </ul>
+    </div>
+</div>
+            </header>
+
+            <main id="main-content" class="page-body">
+                <div class="page-header">
+                    <h1>Çeviri Profilleri</h1>
+                    <p class="page-intro">Sık kullandığınız dil, tablo ve mod ayarlarınızı profil olarak kaydedin. Bir tıklamayla çeviri arayüzüne yükleyin.</p>
+                </div>
+
+                <!-- New profile button -->
+                <div id="new-profile-section">
+                    <button type="button" class="btn btn-primary" id="new-profile-btn" aria-expanded="false" aria-controls="profile-form-card">
+                        <span aria-hidden="true">+</span> Yeni Profil
+                    </button>
+                </div>
+
+                <!-- Profile form (hidden by default) -->
+                <section class="card" id="profile-form-card" hidden>
+                    <h2 id="form-title">Yeni Profil</h2>
+                    <form id="profile-form" novalidate>
+                        <input type="hidden" id="profile-id" value="">
+                        <div class="form-group">
+                            <label for="profile-name">Profil Adı</label>
+                            <input type="text" id="profile-name" maxlength="100" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profile-locale">Dil</label>
+                                <select id="profile-locale" required>
+                                    <option value="">— Seçin —</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="profile-table">Braille Tablosu</label>
+                                <select id="profile-table" required>
+                                    <option value="">Tablo seçin…</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profile-mode">Mod</label>
+                                <select id="profile-mode" required>
+                                    <option value="display">Braille Ekran</option>
+                                    <option value="embosser">Embosser (Yazıcı)</option>
+                                    <option value="notetaker">Nota Alıcı Cihaz</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="format-group" hidden>
+                                <label for="profile-format">Dosya Formatı</label>
+                                <select id="profile-format">
+                                    <option value="">— Seçin —</option>
+                                </select>
+                                <p class="field-hint">Seçili mod için kullanılabilir formatlar. Boş bırakılırsa önerilen format kullanılır.</p>
+                            </div>
+                        </div>
+                        <div class="form-group" id="contraction-categories-group" hidden>
+                            <fieldset>
+                                <legend>Kısaltma Kategorileri</legend>
+                                <div id="contraction-categories" class="checkbox-group" role="group" aria-label="Kısaltma kategorileri">
+                                    <!-- Dinamik olarak doldurulur -->
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="form-group" id="page-settings-group" hidden>
+                            <fieldset>
+                                <legend>Sayfa Düzeni</legend>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="profile-paper-size">Kağıt Boyutu</label>
+                                        <select id="profile-paper-size">
+                                            <option value="">— Seçin —</option>
+                                            <option value="a4">A4</option>
+                                            <option value="letter">Letter (8.5×11")</option>
+                                            <option value="11.5x11">11×11.5" (Braille Standardı)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profile-chars-per-line">Satır Başına Karakter</label>
+                                        <input type="number" id="profile-chars-per-line" min="20" max="50" placeholder="30">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="profile-lines-per-page">Sayfa Başına Satır</label>
+                                        <input type="number" id="profile-lines-per-page" min="10" max="35" placeholder="28">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profile-top-margin">Üst Kenar Boşluğu (satır)</label>
+                                        <input type="number" id="profile-top-margin" min="0" max="10" placeholder="0">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="profile-binding-margin">Cilt Payı (karakter)</label>
+                                        <input type="number" id="profile-binding-margin" min="0" max="10" placeholder="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="checkbox-label" style="margin-top: 2em">
+                                            <input type="checkbox" id="profile-interpoint">
+                                            <span>Çift Taraflı (Interpoint)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="profile-is-default">
+                                <span>Varsayılan profil olarak ayarla</span>
+                            </label>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="form-submit-btn">Kaydet</button>
+                            <button type="button" class="btn btn-ghost" id="form-cancel-btn">İptal</button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Profile list -->
+                <section id="profile-list-section">
+                    <h2 class="section-title">Kayıtlı Profiller</h2>
+                    <p id="no-profiles-message" hidden>Henüz kayıtlı profiliniz yok. Yeni bir profil oluşturun.</p>
+                    <div id="profile-cards" class="profile-cards" role="list" aria-label="Profil listesi">
+                        <!-- Dinamik olarak doldurulur -->
+                    </div>
+                </section>
+
+                <!-- Delete confirmation dialog -->
+                <div id="delete-dialog" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="delete-dialog-title" hidden>
+                    <div class="modal-content">
+                        <h3 id="delete-dialog-title">Profili Sil</h3>
+                        <p id="delete-dialog-message"></p>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-danger" id="delete-confirm-btn">Sil</button>
+                            <button type="button" class="btn btn-ghost" id="delete-cancel-btn">İptal</button>
+                        </div>
+                    </div>
+                </div>
+
+                <p id="profiles-status" class="status-message" role="status" aria-live="polite"></p>
+            </main>
+        </div>
+    </div>
+
+    <script src="../shared/js/api.js" defer></script>
+    <script src="../shared/js/ui.js" defer></script>
+    <script src="js/profiles.js?v=20260830-4" defer></script>
+</body>
+</html>

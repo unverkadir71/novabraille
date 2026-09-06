@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.venv/
+venv/
+env/
+.env
+*.env.local
+*.env.production
+
+# Node / frontend
+node_modules/
+.npm/
+package-lock.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Testing
+.pytest_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+coverage.xml
+*.coverage.*
+
+# Alembic
+alembic/versions/*.pyc
+
+# Database files
+*.db
+*.sqlite
+
+# Docker
+docker-compose.override.yml
+
+# Secrets & credentials
+*.pem
+*.key
+credentials.json
+secrets.json
+*.secret
+
+# Logs
+*.log
+logs/
+
+# Backup
+*.dump
+*.sql.gz
+backup/

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nova Braille — SMTP ayarları.">
+    <meta name="robots" content="noindex, nofollow">
+    <title>SMTP Ayarları — Nova Braille Admin</title>
+    <link rel="stylesheet" href="../../shared/css/tokens.css">
+    <link rel="stylesheet" href="../../shared/css/prefs.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <script src="../../shared/js/preferences.js"></script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Ana içeriğe atla</a>
+
+    <div class="app-shell">
+        <aside class="sidebar" aria-label="Admin menüsü">
+            <div class="sidebar-header">
+                <a href="../index.html" class="logo">Nova Braille</a>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-section-label" aria-hidden="true">Yönetim</li>
+                    <li><a href="index.html">Genel Bakış</a></li>
+                    <li><a href="users.html">Kullanıcılar</a></li>
+                    <li><a href="roles.html">Roller</a></li>
+                    <li><a href="plans.html">Planlar</a></li>
+                    <li><a href="subscriptions.html">Abonelikler</a></li>
+                    <li><a href="payments.html">Ödemeler</a></li>
+                    <li><a href="revenue.html">Gelir</a></li>
+                    <li><a href="legal-editor.html">Hukuki Belgeler</a></li>
+                    <li><a href="smtp.html" aria-current="page">SMTP</a></li>
+                </ul>
+                <ul>
+                    <li><a href="../index.html">Çeviriye Dön</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="main-area">
+            <header class="topbar">
+                <button class="hamburger" aria-expanded="false" aria-controls="sidebar" aria-label="Menüyü aç/kapat">
+                    <span></span><span></span><span></span>
+                </button>
+                <span class="topbar-title">SMTP Ayarları</span>
+            </header>
+
+            <main id="main-content" class="page-body">
+                <div class="page-header">
+                    <h1>SMTP Ayarları</h1>
+                    <p class="page-intro" id="mode-hint">E-posta gönderimi için SMTP sunucu yapılandırması.</p>
+                </div>
+
+                <form id="smtp-form" class="card" novalidate>
+                    <div class="form-group" role="group" aria-labelledby="smtp-enabled-label">
+                        <div class="toggle-row">
+                            <span id="smtp-enabled-label">SMTP Etkin</span>
+                            <button type="button" id="smtp-enabled" role="switch" aria-checked="false"
+                                    class="toggle-switch" aria-label="SMTP'yi etkinleştir veya devre dışı bırak">
+                                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                            </button>
+                        </div>
+                        <span id="enabled-hint" class="field-hint">Kapalıysa e-postalar gönderilmez, sadece log'a yazılır.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="smtp-host">SMTP Sunucusu</label>
+                        <input type="text" id="smtp-host" name="host" maxlength="255"
+                               placeholder="smtp.example.com" aria-describedby="host-hint">
+                        <span id="host-hint" class="field-hint">SMTP sunucu adresi. Örn: smtp.gmail.com</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="smtp-port">Port</label>
+                        <input type="number" id="smtp-port" name="port" min="1" max="65535"
+                               placeholder="587" aria-describedby="port-hint">
+                        <span id="port-hint" class="field-hint">Genellikle 587 (STARTTLS) veya 465 (SSL).</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="smtp-username">Kullanıcı Adı</label>
+                        <input type="text" id="smtp-username" name="username" maxlength="255"
+                               autocomplete="off" aria-describedby="username-hint">
+                        <span id="username-hint" class="field-hint">SMTP kimlik doğrulama kullanıcı adı.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="smtp-password">Şifre</label>
+                        <input type="password" id="smtp-password" name="password" maxlength="255"
+                               autocomplete="new-password" aria-describedby="password-hint">
+                        <span id="password-hint" class="field-hint">Boş bırakılırsa mevcut şifre korunur. <span id="password-status"></span></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="smtp-from-name">Gönderen Adı</label>
+                        <input type="text" id="smtp-from-name" name="from_name" maxlength="100"
+                               placeholder="Nova Braille" aria-describedby="from-name-hint">
+                        <span id="from-name-hint" class="field-hint">E-postaların "Kimden" kısmında görünecek ad.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="smtp-from-email">Gönderen E-posta</label>
+                        <input type="email" id="smtp-from-email" name="from_email" maxlength="254"
+                               placeholder="noreply@novabraille.com" aria-describedby="from-email-hint">
+                        <span id="from-email-hint" class="field-hint">E-postaların gönderileceği adres.</span>
+                    </div>
+
+                    <div class="form-group" role="group" aria-labelledby="smtp-tls-label">
+                        <div class="toggle-row">
+                            <span id="smtp-tls-label">STARTTLS Kullan</span>
+                            <button type="button" id="smtp-tls" role="switch" aria-checked="true"
+                                    class="toggle-switch" aria-label="STARTTLS kullanımını aç/kapat">
+                                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                            </button>
+                        </div>
+                        <span class="field-hint">Port 587 için genellikle açık olmalıdır.</span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="save-btn">Ayarları Kaydet</button>
+                        <button type="button" class="btn btn-secondary" id="test-btn">Test E-postası Gönder</button>
+                    </div>
+
+                    <p id="smtp-status" class="status-message" role="status" aria-live="polite"></p>
+                </form>
+            </main>
+        </div>
+    </div>
+
+    <script src="../../shared/js/api.js" defer></script>
+    <script src="../../shared/js/ui.js" defer></script>
+    <script src="js/admin-smtp.js" defer></script>
+</body>
+</html>

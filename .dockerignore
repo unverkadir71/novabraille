@@ -1,0 +1,76 @@
+# Git history and metadata
+.git/
+.gitignore
+.gitattributes
+.github/
+
+# Environment and secrets
+.env
+.env.*
+*.env.local
+*.env.production
+credentials/
+*.pem
+*.key
+*.secret
+secrets.json
+credentials.json
+
+# Database files
+*.db
+*.sqlite
+*.db-journal
+*.db-wal
+
+# Python cache and build artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.venv/
+venv/
+env/
+
+# Testing
+.pytest_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+coverage.xml
+*.coverage.*
+tests/
+
+# OS and IDE
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Backup
+*.dump
+*.sql.gz
+backup/
+
+# Dependency lock file (rebuilt in image)
+uv.lock
+
+# Node / frontend (not needed in production image)
+node_modules/
+.npm/
+package-lock.json
+
+# Docker
+docker-compose.override.yml
+
+# Alembic cache
+alembic/versions/__pycache__/

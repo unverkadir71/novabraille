@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nova Braille — hesap etkinleştirme.">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Hesap Etkinleştirme — Nova Braille</title>
+    <link rel="stylesheet" href="../shared/css/tokens.css">
+    <link rel="stylesheet" href="../shared/css/prefs.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="../shared/js/preferences.js"></script>
+</head>
+<body class="auth-page">
+    <main id="main-content">
+        <div class="auth-card">
+            <a href="../public/index.html" class="logo">Nova Braille</a>
+            <h1>Hesabınızı Etkinleştirin</h1>
+            <p class="auth-subtitle">E-postanıza gönderilen bağlantıdaki aktivasyon kodu ile parolanızı belirleyin.</p>
+
+            <form id="activate-form" class="stack" novalidate>
+                <div class="form-field">
+                    <label for="token">Aktivasyon Kodu</label>
+                    <input type="text" id="token" name="token" required aria-required="true">
+                    <p class="field-hint">E-posta ile gönderilen tek kullanımlık kod.</p>
+                </div>
+                <div class="form-field">
+                    <label for="display-name">Adınız (isteğe bağlı)</label>
+                    <input type="text" id="display-name" name="display_name" autocomplete="name">
+                </div>
+                <div class="form-field">
+                    <label for="password">Yeni Parola</label>
+                    <input type="password" id="password" name="password" required minlength="8" autocomplete="new-password" aria-required="true">
+                    <p class="field-hint">En az 8 karakter.</p>
+                </div>
+                <button type="submit" class="btn btn-primary" id="activate-submit">Etkinleştir</button>
+            </form>
+
+            <p id="activate-status" class="status-message" role="status" aria-live="polite"></p>
+
+            <div class="auth-links">
+                <a href="login.html">Giriş sayfasına dön</a>
+            </div>
+        </div>
+    </main>
+    <script src="../shared/js/api.js" defer></script>
+    <script src="../shared/js/ui.js" defer></script>
+    <script src="js/activate.js" defer></script>
+</body>
+</html>

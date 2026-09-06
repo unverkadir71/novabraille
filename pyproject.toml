@@ -1,0 +1,83 @@
+[project]
+name = "nova-braille"
+version = "0.1.0"
+description = "Braille translation web application"
+requires-python = ">=3.13"
+license = "AGPL-3.0-or-later"
+readme = "README.md"
+
+dependencies = [
+    # Web framework
+    "fastapi>=0.115,<1",
+    "uvicorn[standard]>=0.32",
+    # Database
+    "sqlalchemy[asyncio]>=2.0,<3",
+    "asyncpg>=0.30",
+    "alembic>=1.14",
+    # Configuration
+    "pydantic-settings>=2.7",
+    "pydantic[email]>=2",
+    # Auth
+    "pwdlib[argon2]>=0.2",
+    "python-multipart>=0.0.18",
+    # Translation (note: louis installed system-wide from Liblouis 3.38.0 source)
+    "pymupdf>=1.28",
+    # Document processing — extended format support (ADR-016)
+    "openpyxl>=3.1",
+    "python-docx>=1.1",
+    "lxml>=6.0",
+    # Task queue (dramatiq 2.2.0 for production)
+    "dramatiq[redis]>=2.2",
+    # Logging
+    "structlog>=26.0",
+    "orjson>=3.10",
+    # HTTP client
+    "httpx>=0.28",
+    # Resilience
+    "tenacity>=9",
+    # Email
+    "jinja2>=3.1",
+    "aiosmtplib>=3",
+    # Security
+    "cryptography>=50",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=0.24",
+    "pytest-cov>=6",
+    "httpx>=0.28",
+    "ruff>=0.8",
+    "mypy>=1.14",
+    "aiosqlite>=0.21",
+]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.setuptools.packages.find]
+where = ["backend/src"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "SIM", # flake8-simplify
+]
+ignore = []
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "--tb=short -v"

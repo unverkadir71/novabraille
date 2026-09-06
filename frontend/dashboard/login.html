@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nova Braille — giriş yapın.">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Giriş — Nova Braille</title>
+    <link rel="stylesheet" href="../shared/css/tokens.css">
+    <link rel="stylesheet" href="../shared/css/prefs.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="../shared/js/preferences.js"></script>
+</head>
+<body class="auth-page">
+    <main id="main-content">
+        <div class="auth-card">
+            <a href="../public/index.html" class="logo">Nova Braille</a>
+            <h1>Giriş Yapın</h1>
+            <p class="auth-subtitle">Braille çeviri hesabınıza erişin.</p>
+
+            <form id="login-form" class="stack" novalidate>
+                <div class="form-field">
+                    <label for="email">E-posta Adresi</label>
+                    <input type="email" id="email" name="email" required autocomplete="email" aria-required="true">
+                </div>
+                <div class="form-field">
+                    <label for="password">Parola</label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password" aria-required="true">
+                </div>
+                <button type="submit" class="btn btn-primary" id="login-submit">Giriş Yap</button>
+            </form>
+
+            <p id="login-status" class="status-message" role="status" aria-live="polite"></p>
+
+            <div class="auth-links">
+                <a href="forgot-password.html">Parolamı unuttum</a>
+                <a href="../public/pricing.html" id="signup-link">Hesabınız yok mu? Plan seçin</a>
+            </div>
+
+            <footer class="auth-footer">
+                <nav aria-label="Hukuki belgeler">
+                    <a href="../public/privacy.html">Gizlilik</a>
+                    <span aria-hidden="true">·</span>
+                    <a href="../public/kvkk.html">KVKK</a>
+                    <span aria-hidden="true">·</span>
+                    <a href="../public/terms.html">Kullanım Koşulları</a>
+                </nav>
+            </footer>
+        </div>
+    </main>
+    <script src="../shared/js/api.js" defer></script>
+    <script src="../shared/js/ui.js" defer></script>
+    <script src="js/login.js" defer></script>
+</body>
+</html>

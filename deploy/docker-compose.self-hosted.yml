@@ -1,0 +1,36 @@
+# Nova Braille — Docker Compose (Self-Hosted)
+#
+# Tek konteyner, SQLite, isteğe bağlı SMTP.
+# İlk admin NOVA_ADMIN_EMAIL ve NOVA_ADMIN_PASSWORD ile oluşturulur.
+
+version: "3.9"
+
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "${PORT:-9876}:9876"
+    environment:
+      APP_MODE: self_hosted
+      DATABASE_URL: sqlite+aiosqlite:///data/nova-braille.db
+      SECRET_KEY: ${SECRET_KEY:-$(openssl rand -hex 32)}
+      NOVA_ADMIN_EMAIL: ${NOVA_ADMIN_EMAIL:?NOVA_ADMIN_EMAIL zorunlu}
+      NOVA_ADMIN_PASSWORD: ${NOVA_ADMIN_PASSWORD:?NOVA_ADMIN_PASSWORD zorunlu}
+      # SMTP isteğe bağlı — boş bırakılırsa e-postalar log'a yazılır
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM: ${SMTP_FROM:-noreply@novabraille.local}
+      SELF_HOSTED_REGISTRATION: ${SELF_HOSTED_REGISTRATION:-closed}
+    volumes:
+      - nova-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9876/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  nova-data:

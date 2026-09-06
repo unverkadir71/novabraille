@@ -1,0 +1,77 @@
+# Nova Braille — Docker Compose (Hosted)
+#
+# PostgreSQL 16 + Redis 7 + Nova Braille.
+# Production kullanımı için SMTP env değişkenlerini .env dosyasında tanımlayın.
+
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: novabraille
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-change-me}
+      POSTGRES_DB: novabraille
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U novabraille"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redisdata:/data
+
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "9876:9876"
+    environment:
+      APP_MODE: hosted
+      DATABASE_URL: postgresql+asyncpg://novabraille:${DB_PASSWORD:-change-me}@db:5432/novabraille
+      REDIS_URL: redis://redis:6379/0
+      SECRET_KEY: ${SECRET_KEY:?SECRET_KEY zorunlu}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      SMTP_FROM: ${SMTP_FROM:-noreply@novabraille.com}
+      APP_URL: ${APP_URL:-https://app.novabraille.com}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - appdata:/data
+
+  # Dramatiq worker — e-posta kuyruğu
+  worker:
+    build: .
+    restart: unless-stopped
+    command: dramatiq backend.src.services.email --processes 2
+    environment:
+      APP_MODE: hosted
+      DATABASE_URL: postgresql+asyncpg://novabraille:${DB_PASSWORD:-change-me}@db:5432/novabraille
+      REDIS_URL: redis://redis:6379/0
+      SECRET_KEY: ${SECRET_KEY:?SECRET_KEY zorunlu}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+volumes:
+  pgdata:
+  redisdata:
+  appdata:
